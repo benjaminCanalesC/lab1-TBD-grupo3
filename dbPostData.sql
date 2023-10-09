@@ -27,7 +27,7 @@ VALUES
     (3, 'Extintores', 'Extintores necesarios para la tarea de "Apagar fuego".'),
     (4, 'Linternas', 'Linternas necesarias para la tarea de "Guiar a lugar seguro".'),
     (5, 'Señales de SOS', 'Señales de SOS necesarias para la tarea de "Realizar SOS".'),
-    (6, 'Material de cubierta para conductos de ventilación', 'Material necesario para asegurar los conductos de ventilación en situaciones críticas.');
+    (6, 'Material de cubierta para conductos de ventilación', 'Material necesario para asegurar los conductos de ventilación en situaciones críticas.'),
     (7, 'Cuerdas', 'Cuerdas necesarias para la tarea de "Ayudar a subir a un lugar alto".'),
     (8, 'Vehículos de transporte', 'Vehículos de transporte necesarios para la tarea de "Ayudar a evacuar las casas".'),
     (9, 'Equipamiento de comunicación', 'Equipamiento de comunicación necesario para la tarea de "Establecer centro de comandos".'),
