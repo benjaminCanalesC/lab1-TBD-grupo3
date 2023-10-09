@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public.emergency(
     id_emergency SERIAL PRIMARY KEY,
     emergency_name TEXT COLLATE pg_catalog."default",
     emergency_location TEXT COLLATE pg_catalog."default",
+	emergency_type TEXT COLLATE pg_catalog."default",
     statement_date DATE,
     id_state INTEGER);
 
