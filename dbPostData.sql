@@ -19,6 +19,38 @@ VALUES
 	(11, 'Evaluar daños', 'Realizar evaluación completa para determinar las necesidades a largo plazo', 5, 1),
 	(12, 'Atender psicológicamente', 'Ofrecer apoyo psicológico a personas traumatizadas', 3, 1);
 
+-- REQUEST
+INSERT INTO request (id_request, request_name, request_description)
+VALUES
+    (1, 'Equipo médico', 'Equipo médico necesario para la tarea de "Atender heridos".'),
+    (2, 'Herramientas de construcción', 'Herramientas de construcción necesarias para la tarea de "Extraer escombros".'),
+    (3, 'Extintores', 'Extintores necesarios para la tarea de "Apagar fuego".'),
+    (4, 'Linternas', 'Linternas necesarias para la tarea de "Guiar a lugar seguro".'),
+    (5, 'Señales de SOS', 'Señales de SOS necesarias para la tarea de "Realizar SOS".'),
+    (6, 'Material de cubierta para conductos de ventilación', 'Material necesario para asegurar los conductos de ventilación en situaciones críticas.');
+    (7, 'Cuerdas', 'Cuerdas necesarias para la tarea de "Ayudar a subir a un lugar alto".'),
+    (8, 'Vehículos de transporte', 'Vehículos de transporte necesarios para la tarea de "Ayudar a evacuar las casas".'),
+    (9, 'Equipamiento de comunicación', 'Equipamiento de comunicación necesario para la tarea de "Establecer centro de comandos".'),
+    (10, 'Alimentos', 'Alimentos necesarios para la tarea de "Suministrar alimentos".'),
+    (11, 'Kits de evaluación de daños', 'Kits de evaluación de daños necesarios para la tarea de "Evaluar daños".'),
+    (12, 'Material de apoyo psicológico', 'Material de apoyo psicológico necesario para la tarea de "Atender psicológicamente".');
+
+-- TASK-REQUEST
+INSERT INTO task_request (id_task, id_request)
+VALUES
+    (1, 1),  -- Equipamiento médico para la tarea "Atender heridos".
+    (2, 2),  -- Herramientas de construcción para la tarea "Extraer escombros".
+    (3, 3),  -- Extintores para la tarea "Apagar fuego".
+    (4, 4),  -- Linternas para la tarea "Guiar a lugar seguro".
+    (5, 5),  -- Señales de SOS para la tarea "Realizar SOS".
+    (6, 6),  -- Material de cubierta para conductos de ventilación para la tarea "Cubrir conductos de ventilación".
+    (7, 7),  -- Cuerdas para la tarea "Ayudar a subir a un lugar alto".
+    (8, 8),  -- Vehículos de transporte para la tarea "Ayudar a evacuar las casas".
+    (9, 9),  -- Equipamiento de comunicación para la tarea "Establecer centro de comandos".
+    (10, 10),  -- Alimentos para la tarea "Suministrar alimentos".
+    (11, 11),  -- Kits de evaluación de daños para la tarea "Evaluar daños".
+    (12, 12);  -- Material de apoyo psicológico para la tarea "Atender psicológicamente".
+
 INSERT INTO institution (id_institution, institution_name, institution_description)
 VALUES
 	(1, 'Instituto Nacional de Ayuda de Terremotos (INAT)', 
