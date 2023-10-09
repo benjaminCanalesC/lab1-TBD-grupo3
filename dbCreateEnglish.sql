@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS public.emergency_ability(
 
 CREATE TABLE IF NOT EXISTS public.user(
     id_user SERIAL PRIMARY KEY,
-    email TEXT COLLATE pg_catalog."default",
+    username TEXT COLLATE pg_catalog."default",
     password TEXT COLLATE pg_catalog."default",
     id_profile INTEGER,
     id_rol INTEGER,
