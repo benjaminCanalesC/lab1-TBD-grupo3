@@ -75,20 +75,20 @@ INSERT INTO emergency (id_emergency, emergency_name, emergency_location,
 					   emergency_type, statement_date, id_state)
 VALUES
 	(1, 'Incendio forestal en comuna Lautaro', 'Lautaro, Región de la Araucanía',
-	'incendio', '2023-10-15', 1),
+	'0', '2023-10-15', 1),
 	(2, 'Incendio forestal en Viña del Mar', 'Viña del Mar, Región de Valparaíso',
-	'incendio', '2023-10-14', 1),
-	(3, 'Erupción Volcán Villarica', 'Región de la Araucanía', 'erupcion', '2023-10-16', 1),
-	(4, 'Erupción complejo volcánico Puyehue', 'Región de los Ríos', 'erupcion','2023-10-12', 1),
-	(5, 'Terremoto de Iquique', 'Región de Tarapacá', 'terremoto/sismo', '2023-10-15', 1),
-	(6, 'Terremoto Tocopilla', 'Región de Antofagasta', 'terremoto/sismo', '2023-10-13', 1),
-	(7, 'Derrumbe Santiago', 'Región Metropolitana', 'derrumbe', '2023-10-09', 1),
-	(8, 'Derrumbes en Illapel', 'Región de Coquimbo', 'derrumbe', '2023-10-10', 1),
-	(9, 'Tsunami en Antofagasta', 'Región de Antofagasta', 'tsunami', '2023-10-08', 1),
-	(10, 'Tsunami en Constitución', 'Región de El Maule', 'tsunami', '2023-10-08', 1),
+	'0', '2023-10-14', 1),
+	(3, 'Erupción Volcán Villarica', 'Región de la Araucanía', '1', '2023-10-16', 1),
+	(4, 'Erupción complejo volcánico Puyehue', 'Región de los Ríos', '1','2023-10-12', 1),
+	(5, 'Terremoto de Iquique', 'Región de Tarapacá', '2', '2023-10-15', 1),
+	(6, 'Terremoto Tocopilla', 'Región de Antofagasta', '2', '2023-10-13', 1),
+	(7, 'Derrumbe Santiago', 'Región Metropolitana', '3', '2023-10-09', 1),
+	(8, 'Derrumbes en Illapel', 'Región de Coquimbo', '3', '2023-10-10', 1),
+	(9, 'Tsunami en Antofagasta', 'Región de Antofagasta', '4', '2023-10-08', 1),
+	(10, 'Tsunami en Constitución', 'Región de El Maule', '4', '2023-10-08', 1),
 	(11, 'Aluvión de Villa Santa Lucía', 'Chaitén, Región de Los Lagos', 
-	 'inundación', '2023-10-13', 1),
-	(12, 'Aluvión del Biobío', 'Región del Biobío', 'inundación', '2023-10-14', 1);
+	 '5', '2023-10-13', 1),
+	(12, 'Aluvión del Biobío', 'Región del Biobío', '5', '2023-10-14', 1);
 
 INSERT INTO emergency_institution (id_emergency, id_institution)
 VALUES
