@@ -4,35 +4,39 @@ CREATE TABLE IF NOT EXISTS public.query_log (
     username TEXT,
     table_name TEXT,
     query_text TEXT,
+	operation TEXT,
     timestamp TIMESTAMPTZ DEFAULT NOW()
 );
 
 -------------- EN ORDEN
 
-
--- Crear una función que registre las operaciones en la tabla ability
+-- Crear una función que registre las operaciones en la tabla "ability"
 CREATE OR REPLACE FUNCTION log_query_ability()
 RETURNS TRIGGER AS $$
 DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_user; -- Cambiado a current_user
     table_name := 'ability';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_ability, ability_name) VALUES (' || NEW.id_ability || ', ' || quote_literal(NEW.ability_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET ability_name = ' || quote_literal(NEW.ability_name) || ' WHERE id_ability = ' || NEW.id_ability;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_ability = ' || OLD.id_ability;
     END IF;
 
-    -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    -- Insertar el registro en la tabla "query_log"
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -55,23 +59,27 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     
 -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'emergency';
 
-    -- Verificar la operación realizada
+   -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_emergency, emergency_name, emergency_location, emergency_type, statement_date, id_state) VALUES (' || NEW.id_emergency || ', ' || quote_literal(NEW.emergency_name) || ', ' || quote_literal(NEW.emergency_location) || ', ' || quote_literal(NEW.emergency_type) || ', ' || quote_literal(NEW.statement_date) || ', ' || NEW.id_state || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET emergency_name = ' || quote_literal(NEW.emergency_name) || ', emergency_location = ' || quote_literal(NEW.emergency_location) || ', emergency_type = ' || quote_literal(NEW.emergency_type) || ', statement_date = ' || quote_literal(NEW.statement_date) || ', id_state = ' || NEW.id_state || ' WHERE id_emergency = ' || NEW.id_emergency;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_emergency = ' || OLD.id_emergency;
     END IF;
 
-    -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    -- Insertar el registro en la tabla query_log 
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -92,22 +100,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'emergency_ability';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_ability, id_emergency) VALUES (' || NEW.id_ability || ', ' || NEW.id_emergency || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET id_ability = ' || NEW.id_ability || ', id_emergency = ' || NEW.id_emergency || ' WHERE id_ability = ' || OLD.id_ability || ' AND id_emergency = ' || OLD.id_emergency;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_ability = ' || OLD.id_ability || ' AND id_emergency = ' || OLD.id_emergency;
     END IF;
 
-    -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    -- Insertar el registro en la tabla query_log 
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -130,22 +142,27 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'emergency_institution';
 
-    -- Verificar la operación realizada
-    IF (TG_OP = 'INSERT') THEN
+    -- Obtener la operación realizada y construir la consulta
+IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_emergency, id_institution) VALUES (' || NEW.id_emergency || ', ' || NEW.id_institution || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET id_emergency = ' || NEW.id_emergency || ', id_institution = ' || NEW.id_institution || ' WHERE id_emergency = ' || OLD.id_emergency || ' AND id_institution = ' || OLD.id_institution;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_emergency = ' || OLD.id_emergency || ' AND id_institution = ' || OLD.id_institution;
     END IF;
 
-    -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+
+    -- Insertar el registro en la tabla query_log 
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -168,23 +185,27 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual
 -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'emergency_task';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_emergency, id_task) VALUES (' || NEW.id_emergency || ', ' || NEW.id_task || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET id_emergency = ' || NEW.id_emergency || ', id_task = ' || NEW.id_task || ' WHERE id_emergency = ' || OLD.id_emergency || ' AND id_task = ' || OLD.id_task;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_emergency = ' || OLD.id_emergency || ' AND id_task = ' || OLD.id_task;
     END IF;
-
-    -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+	
+    -- Insertar el registro en la tabla query_log 
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -208,22 +229,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
      -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'institution';
 
-    -- Verificar la operación realizada
-    IF (TG_OP = 'INSERT') THEN
+    -- Obtener la operación realizada y construir la consulta
+        IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_institution, institution_name, institution_description) VALUES (' || NEW.id_institution || ', ' || quote_literal(NEW.institution_name) || ', ' || quote_literal(NEW.institution_description) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET institution_name = ' || quote_literal(NEW.institution_name) || ', institution_description = ' || quote_literal(NEW.institution_description) || ' WHERE id_institution = ' || NEW.id_institution;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_institution = ' || OLD.id_institution;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -247,22 +272,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'profile';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
-        query_text := 'INSERT';
+		query_text = 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_profile || ', ' || quote_literal(NEW.profile_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
-        query_text := 'UPDATE';
+        query_text = 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET profile_name = ' || quote_literal(NEW.profile_name) || ' WHERE id_profile = ' || NEW.id_profile;
     ELSIF (TG_OP = 'DELETE') THEN
-        query_text := 'DELETE';
+        query_text = 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_profile = ' || OLD.id_profile;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -286,21 +315,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'ranking';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
-        query_text := 'INSERT';
+		query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_ranking || ', ' || quote_literal(NEW.rank_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET rank_name = ' || quote_literal(NEW.rank_name) || ' WHERE id_ranking = ' || NEW.id_ranking;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_ranking = ' || OLD.id_ranking;
     END IF;
-    -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+	
+    -- Insertar el registro en la tabla query_log 
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -324,22 +358,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'request';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+		operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_request || ', ' || quote_literal(NEW.request_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET request_name = ' || quote_literal(NEW.request_name) || ' WHERE id_request = ' || NEW.id_request;
     ELSIF (TG_OP = 'DELETE') THEN
-        query_text := 'DELETE';
+    	query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_request = ' || OLD.id_request;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -361,22 +399,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'rol';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+		operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_rol || ', ' || quote_literal(NEW.rol_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET rol_name = ' || quote_literal(NEW.rol_name) || ' WHERE id_rol = ' || NEW.id_rol;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_rol = ' || OLD.id_rol;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -400,22 +442,25 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'state';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+		operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_state || ', ' || quote_literal(NEW.state_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET state_name = ' || quote_literal(NEW.state_name) || ' WHERE id_state = ' || NEW.id_state;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_state = ' || OLD.id_state;
     END IF;
-
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -439,22 +484,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'task';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
-        query_text := 'INSERT';
+		query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_task || ', ' || quote_literal(NEW.task_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
-        query_text := 'UPDATE';
+		query_text := 'UPDATE';
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET task_name = ' || quote_literal(NEW.task_name) || ' WHERE id_task = ' || NEW.id_task;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_task = ' || OLD.id_task;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -476,21 +525,25 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'task_request';
 
-    -- Verificar la operación realizada
+-- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+		operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_task_request || ', ' || NEW.id_task || ', ' || NEW.id_user || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET id_task = ' || NEW.id_task || ', id_user = ' || NEW.id_user || ' WHERE id_task_request = ' || NEW.id_task_request;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_task_request = ' || OLD.id_task_request;
     END IF;
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -513,22 +566,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'user';
 
-    -- Verificar la operación realizada
+ 	-- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
-        query_text := 'INSERT';
+		query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_user || ', ' || quote_literal(NEW.username) || ', ' || quote_literal(NEW.email) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET username = ' || quote_literal(NEW.username) || ', email = ' || quote_literal(NEW.email) || ' WHERE id_user = ' || NEW.id_user;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_user = ' || OLD.id_user;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -551,22 +608,26 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'user_ability';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
-        query_text := 'INSERT';
+		query_text := 'INSERT';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_user || ', ' || NEW.id_ability || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET id_ability = ' || NEW.id_ability || ' WHERE id_user = ' || NEW.id_user;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_user = ' || OLD.id_user;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -588,18 +649,22 @@ DECLARE
     current_username VARCHAR(255);
     table_name VARCHAR(25);
     query_text VARCHAR(10);
+	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
     table_name := 'user_request';
 
-    -- Verificar la operación realizada
+    -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
+		operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (' || TG_ARGV[0] || ') VALUES (' || NEW.id_user || ', ' || NEW.id_request || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
+		operation := 'UPDATE ' || TG_TABLE_NAME || ' SET id_request = ' || NEW.id_request || ' WHERE id_user = ' || NEW.id_user;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
+		operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_user = ' || OLD.id_user;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
