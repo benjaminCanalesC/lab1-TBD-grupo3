@@ -1,3 +1,6 @@
+-- SCRIPT DE POBLACIÓN DE DATOS
+SELECT setval('state_id_state_seq', 4);
+
 INSERT INTO state (id_state, state_name, state_description)
 VALUES
     (1, 'Sin asignar', 'La tarea o emergencia se ha definido pero no está en curso'),
@@ -22,18 +25,18 @@ VALUES
 -- REQUEST
 INSERT INTO request (id_request, request_name, request_description)
 VALUES
-    (1, 'Equipo médico', 'Equipo médico necesario para la tarea de "Atender heridos".'),
-    (2, 'Herramientas de construcción', 'Herramientas de construcción necesarias para la tarea de "Extraer escombros".'),
-    (3, 'Extintores', 'Extintores necesarios para la tarea de "Apagar fuego".'),
-    (4, 'Linternas', 'Linternas necesarias para la tarea de "Guiar a lugar seguro".'),
-    (5, 'Señales de SOS', 'Señales de SOS necesarias para la tarea de "Realizar SOS".'),
+    (1, 'Equipo médico', 'Equipo médico necesario para la tarea de Atender heridos.'),
+    (2, 'Herramientas de construcción', 'Herramientas de construcción necesarias para la tarea de Extraer escombros.'),
+    (3, 'Extintores', 'Extintores necesarios para la tarea de Apagar fuego.'),
+    (4, 'Linternas', 'Linternas necesarias para la tarea de Guiar a lugar seguro.'),
+    (5, 'Señales de SOS', 'Señales de SOS necesarias para la tarea de Realizar SOS.'),
     (6, 'Material de cubierta para conductos de ventilación', 'Material necesario para asegurar los conductos de ventilación en situaciones críticas.'),
-    (7, 'Cuerdas', 'Cuerdas necesarias para la tarea de "Ayudar a subir a un lugar alto".'),
-    (8, 'Vehículos de transporte', 'Vehículos de transporte necesarios para la tarea de "Ayudar a evacuar las casas".'),
-    (9, 'Equipamiento de comunicación', 'Equipamiento de comunicación necesario para la tarea de "Establecer centro de comandos".'),
-    (10, 'Alimentos', 'Alimentos necesarios para la tarea de "Suministrar alimentos".'),
-    (11, 'Kits de evaluación de daños', 'Kits de evaluación de daños necesarios para la tarea de "Evaluar daños".'),
-    (12, 'Material de apoyo psicológico', 'Material de apoyo psicológico necesario para la tarea de "Atender psicológicamente".');
+    (7, 'Cuerdas', 'Cuerdas necesarias para la tarea de Ayudar a subir a un lugar alto.'),
+    (8, 'Vehículos de transporte', 'Vehículos de transporte necesarios para la tarea de Ayudar a evacuar las casas.'),
+    (9, 'Equipamiento de comunicación', 'Equipamiento de comunicación necesario para la tarea de Establecer centro de comandos.'),
+    (10, 'Alimentos', 'Alimentos necesarios para la tarea de Suministrar alimentos.'),
+    (11, 'Kits de evaluación de daños', 'Kits de evaluación de daños necesarios para la tarea de Evaluar daños.'),
+    (12, 'Material de apoyo psicológico', 'Material de apoyo psicológico necesario para la tarea de Atender psicológicamente.');
 
 -- TASK-REQUEST
 INSERT INTO task_request (id_task, id_request)
@@ -99,12 +102,21 @@ VALUES
 	(1,1), (2,3), (3,6), (4,5), (5,9), (6,2), (7,11), 
 	(8,4), (9,7), (10,12), (11,8), (12,10);
 	
-	
-INSERT INTO rol (id_rol, rol_name)
+INSERT INTO ability (id_ability, ability_name, ability_description)
+VALUES 
+	(1, 'Liderazgo', 'Ser capaz de guiar a equipos, coordinar esfuerzos y mantener la calma en situaciones caóticas'),
+	(2, 'Adaptabilidad', 'Poder enfrentar situaciones dinámicas e impredecibles provocadas por los desastres naturales'),
+	(3, 'Trabajo en equipo', 'Tener la capacidad de colaborar efectivamente con otro voluntario'),
+	(4, 'Habilidades de busqueda y rescate', 'Ser capaz de buscar heridos y rescatar personas afectadas'),
+	(5, 'Apoyo psicológico', 'Lidiar con el estrés y proporcionar apoyo emocional a las víctimas del desastre'),
+	(6, 'Habilidades de atención médica', 'Saber proporcionar primeros auxilios y atención médica de emergencia');
+
+INSERT INTO emergency_ability (id_emergency, id_ability)
 VALUES
-	(1, 'Voluntario'),
-	(2, 'Coordinador');
-	
+	(1,3),(1,6),(2,1),(2,3),(2,4),(3,2),(3,4),(3,6),(4,1),(4,2),(4,6),
+	(5,2),(5,3),(5,4),(6,1),(6,4),(7,4),(7,5),(8,3),(8,5),(9,1),(9,5),
+	(10,3),(10,5),(11,2),(11,3),(11,5),(12,2),(12,3),(12,4);
+
 INSERT INTO profile (id_profile, photo, first_name, first_lastname,
 					 description, gender, birthday)
 VALUES
@@ -115,39 +127,103 @@ VALUES
 	(5, 'enlace', 'Daniel', 'Eguiluz', 'Administrador de la App', 'M', '2000-01-01'),
 	(6, 'enlace', 'Humberto', 'Salas', 'Ayudando con erupciones volcanicas', 'M', '1998-04-12'),
 	(7, 'enlace', 'Carla', 'Muñoz', 'Contratacando incendios', 'F', '1993-02-05'),
-	(8, 'enlace', 'Sofia', 'Carvajal', 'Resguardando tras inundaciones', 'F', '1990-02-10');
+	(8, 'enlace', 'Sofia', 'Carvajal', 'Resguardando tras inundaciones', 'F', '1990-02-10'),
+	(9, 'enlace', 'Fernando', 'Ramírez', 'Investigador de Terremotos en INAT', 'M', '1985-08-25'),
+    (10, 'enlace', 'Lucía', 'Torres', 'Voluntaria de CAV para la Seguridad Volcánica', 'F', '1990-06-14'),
+    (11, 'enlace', 'Raúl', 'Mendoza', 'Especialista en Tsunamis en IDT', 'M', '1979-03-18'),
+    (12, 'enlace', 'Marta', 'Gutiérrez', 'Restauradora de CREPIF', 'F', '1992-12-03'),
+    (13, 'enlace', 'Manuel', 'Hernández', 'Gestor de Inundaciones en IGI', 'M', '1988-11-01'),
+    (14, 'enlace', 'Camila', 'Silva', 'Prevención de Derrumbes en IPDDT', 'F', '1980-07-22'),
+	(15, 'enlace', 'Luis', 'Pérez', 'Investigador Asociado en INAT', 'M', '1990-04-15'),
+    (16, 'enlace', 'Ana', 'Rodríguez', 'Asistente de Investigación en INAT', 'F', '1993-07-28'),
+    (17, 'enlace', 'Diego', 'Ortega', 'Educador en CAV', 'M', '1985-02-10'),
+    (18, 'enlace', 'Elena', 'López', 'Coordinadora de Tsunami en IDT', 'F', '1988-12-05'),
+    (19, 'enlace', 'José', 'Martínez', 'Especialista en Restauración en CREPIF', 'M', '1991-09-20'),
+    (20, 'enlace', 'Valentina', 'Gómez', 'Analista de Inundaciones en IGI', 'F', '1983-03-12'),
+    (21, 'enlace', 'Federico', 'Díaz', 'Técnico en Deslizamientos de Tierra en IPDDT', 'M', '1980-05-08'),
+    (22, 'enlace', 'Laura', 'Castillo', 'Supervisora de INAT', 'F', '1982-10-16'),
+    (23, 'enlace', 'Andrés', 'Sanchez', 'Coordinador de Voluntarios en CAV', 'M', '1987-06-30'),
+    (24, 'enlace', 'Mariana', 'Vargas', 'Coordinadora de Respuesta a Tsunamis en IDT', 'F', '1992-01-25');
 
-	/*
-INSERT INTO "user" (id_user, username, password, id_profile, id_rol, id_institution,id,firstname,lastname,role)
+INSERT INTO "user" (id_user, username, password, id_profile,
+					 id_role, id_institution)
 VALUES
-	(1, 'AracelyC', '1234', 1, 2, 1, 1,'o','l',1),
-	(2, 'VicenteM', 'holaMundo', 2, 2, 3, 2,'o','l',1),
-	(3, 'BrancoG', 'password', 3, 2, 4, 3,'o','l',1),
-	(4, 'BenjaC', 'sql', 4, 2, 5, 4,'o','l',1),
-	(5, 'DanielE', '4321', 5, 2, 6, 5,'o','l',1),
-	(6, 'HumbertoS', 'contraseña', 6, 1, 2, 6,'o','l',1),
-	(7, 'CarlaM', 'contraseña1234', 7, 1, 4, 7,'o','l',1),
-	(8, 'SofiaC', 'contraseña2023', 8, 1, 5, 8,'o','l',1);
-*/
-INSERT INTO ability (id_ability, ability_name, ability_description)
-VALUES 
-	(1, 'Liderazgo', 'Ser capaz de guiar a equipos, coordinar esfuerzos y mantener la calma en situaciones caóticas'),
-	(2, 'Adaptabilidad', 'Poder enfrentar situaciones dinámicas e impredecibles provocadas por los desastres naturales'),
-	(3, 'Trabajo en equipo', 'Tener la capacidad de colaborar efectivamente con otro voluntario'),
-	(4, 'Habilidades de busqueda y rescate', 'Ser capaz de buscar heridos y rescatar personas afectadas'),
-	(5, 'Apoyo psicológico', 'Lidiar con el estrés y proporcionar apoyo emocional a las víctimas del desastre'),
-	(6, 'Habilidades de atención médica', 'Saber proporcionar primeros auxilios y atención médica de emergencia');
+	(1, 'aracelyC', 'holamundo', 1, 1, 1),
+	(2, 'mieres7', 'holamundo', 2, 1, 2),
+	(3, 'garciaB', 'holamundo', 3, 1, 3),
+	(4, 'benjaminC', 'holamundo', 4, 1, 4),
+	(5, 'daniE', 'holamundo', 5, 1, 5),
+	(6, 'humbertoS', 'holamundo', 6, 2, 2),
+	(7, 'muñozC', 'holamundo', 7, 2, 4),
+	(8, 'sofiCa', 'holamundo', 8, 2, 5),
+	(9, 'fernandoR', 'holamundo', 9, 2, 1), 
+    (10, 'luciaT', 'holamundo', 10, 2, 2),  
+    (11, 'raulM', 'holamundo', 11, 2, 3),  
+    (12, 'martaG', 'holamundo', 12, 3, 4),  
+    (13, 'manuelH', 'holamundo', 13, 3, 5),  
+    (14, 'camilaS', 'holamundo', 14, 2, 6),
+	(15, 'luisP', 'holamundo', 15, 3, 1),  
+    (16, 'anaR', 'holamundo', 16, 3, 1),  
+    (17, 'diegoO', 'holamundo', 17, 3, 2),  
+    (18, 'elenaL', 'holamundo', 18, 3, 3),  
+    (19, 'joseM', 'holamundo', 19, 3, 4),  
+    (20, 'valentinaG', 'holamundo', 20, 3, 5),  
+    (21, 'federicoD', 'holamundo', 21, 3, 6),  
+    (22, 'lauraC', 'holamundo', 22, 3, 1),  
+    (23, 'andresS', 'holamundo', 23, 3, 2),  
+    (24, 'marianaV', 'holamundo', 24, 3, 3);
 
-/*
 INSERT INTO user_ability (id_user, id_ability)
 VALUES
-	(1,2),(1,3),(1,5),(2,1),(2,4),(2,6),(3,1),(3,2),(3,6),(4,5),(4,6),
-	(5,3),(5,6),(6,2),(6,4),(6,6),(7,1),(7,3),(7,5),(7,6),(8,1),(8,2),
-	(8,4),(8,5),(8,6);
-*/
+    (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 2), (7, 2),
+    (8, 2), (9, 2), (10, 2), (11, 3), (12, 3), (13, 3),
+    (14, 3), (15, 3), (16, 4), (17, 4), (18, 4), (19, 4),
+    (20, 4), (21, 5), (22, 5), (23, 5), (24, 5), (1, 5),
+    (2, 6), (3, 6), (4, 6), (5, 6), (6, 6);
 
-INSERT INTO emergency_ability (id_emergency, id_ability)
+INSERT INTO user_request (id_user, id_request)
 VALUES
-	(1,3),(1,6),(2,1),(2,3),(2,4),(3,2),(3,4),(3,6),(4,1),(4,2),(4,6),
-	(5,2),(5,3),(5,4),(6,1),(6,4),(7,4),(7,5),(8,3),(8,5),(9,1),(9,5),
-	(10,3),(10,5),(11,2),(11,3),(11,5),(12,2),(12,3),(12,4);
+    (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6),
+    (7, 7), (8, 8), (9, 9), (10, 10), (11, 11), (12, 12),
+	(13, 1), (14, 2), (15, 3), (16, 4), (17, 5), (18, 6),
+    (19, 7), (20, 8), (21, 9), (22, 10), (23, 11), (24, 12);
+
+INSERT INTO ranking (ranking_position, id_user, id_task)
+VALUES
+	(1, 12, 1), (1, 9, 2), (1, 4, 3), (1, 2, 4), (1, 2, 5),
+	(1, 17, 6), (1, 18, 7), (1, 13, 8), (1, 16, 9), (1, 20, 10),
+	(1, 21, 11), (1, 24, 12);
+
+-- Secuencias para evitar llaves duplicadas en posteo de datos en postman
+
+SELECT setval('ability_id_ability_seq', 6);
+
+SELECT setval('emergency_id_emergency_seq', 12);
+
+SELECT setval('emergency_ability_id_emergency_ability_seq', 30);
+
+SELECT setval('emergency_institution_id_emergency_institution_seq', 24);
+
+SELECT setval('emergency_task_id_emergency_task_seq', 24);
+
+SELECT setval('institution_id_institution_seq', 6);
+
+SELECT setval('profile_id_profile_seq', 8);
+
+SELECT setval('ranking_id_ranking', 12);
+
+SELECT setval('request_id_request_seq', 12);
+
+SELECT setval('role_id_role_seq', 3);
+
+SELECT setval('state_id_state_seq', 4);
+
+SELECT setval('task_id_task_seq', 13);
+
+SELECT setval('task_request_id_task_request_seq', 24);
+
+SELECT setval('user_id_user_seq', 24);
+
+SELECT setval('user_ability_id_user_ability_seq', 30);
+
+SELECT setval('user_request_id_user_request_seq', 24);

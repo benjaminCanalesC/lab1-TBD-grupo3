@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS public.emergency(
     emergency_name TEXT COLLATE pg_catalog."default",
     emergency_location TEXT COLLATE pg_catalog."default",
     statement_date DATE,
+	emergency_type INTEGER,
     id_state INTEGER);
 
 CREATE TABLE IF NOT EXISTS public.emergency_task(
