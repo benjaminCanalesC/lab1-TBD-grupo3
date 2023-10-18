@@ -4,9 +4,9 @@ BEGIN;
 
 -- Creación de las tablas
 
-CREATE TABLE IF NOT EXISTS public.rol(
-    id_rol SERIAL PRIMARY KEY,
-    rol_name TEXT COLLATE pg_catalog."default");
+CREATE TABLE IF NOT EXISTS public.role(
+    id_role SERIAL PRIMARY KEY,
+    role_name TEXT COLLATE pg_catalog."default");
 
 CREATE TABLE IF NOT EXISTS public.ranking(
     id_ranking SERIAL PRIMARY KEY,
@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS public.emergency(
     id_emergency SERIAL PRIMARY KEY,
     emergency_name TEXT COLLATE pg_catalog."default",
     emergency_location TEXT COLLATE pg_catalog."default",
-	emergency_type TEXT COLLATE pg_catalog."default",
     statement_date DATE,
     id_state INTEGER);
 
@@ -86,7 +85,7 @@ CREATE TABLE IF NOT EXISTS public.user(
     username TEXT COLLATE pg_catalog."default",
     password TEXT COLLATE pg_catalog."default",
     id_profile INTEGER,
-    id_rol INTEGER,
+    id_role INTEGER,
     id_institution INTEGER);
 
 CREATE TABLE IF NOT EXISTS public.user_ability(
@@ -168,8 +167,8 @@ ALTER TABLE IF EXISTS public.user
     ON DELETE NO ACTION;
 
 ALTER TABLE IF EXISTS public.user
-    ADD CONSTRAINT "idRolFK" FOREIGN KEY (id_rol)
-    REFERENCES public.rol (id_rol) MATCH SIMPLE
+    ADD CONSTRAINT "idRoleFK" FOREIGN KEY (id_role)
+    REFERENCES public.role (id_role) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
@@ -215,5 +214,10 @@ ALTER TABLE IF EXISTS public.ranking
     REFERENCES public.task (id_task) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
+	
+-- Creación de roles
+INSERT INTO public.role (role_name) VALUES ('ADMIN');
+INSERT INTO public.role (role_name) VALUES ('COORDINADOR');
+INSERT INTO public.role (role_name) VALUES ('USER');
 
 COMMIT;
