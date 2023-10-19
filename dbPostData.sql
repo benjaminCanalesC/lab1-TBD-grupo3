@@ -1,5 +1,4 @@
 -- SCRIPT DE POBLACIÓN DE DATOS
-SELECT setval('state_id_state_seq', 4);
 
 INSERT INTO state (id_state, state_name, state_description)
 VALUES
@@ -202,9 +201,9 @@ SELECT setval('emergency_id_emergency_seq', 12);
 
 SELECT setval('emergency_ability_id_emergency_ability_seq', 30);
 
-SELECT setval('emergency_institution_id_emergency_institution_seq', 24);
+SELECT setval('emergency_institution_id_emergency_institution_seq', 12);
 
-SELECT setval('emergency_task_id_emergency_task_seq', 24);
+SELECT setval('emergency_task_id_emergency_task_seq', 12);
 
 SELECT setval('institution_id_institution_seq', 6);
 
@@ -218,9 +217,9 @@ SELECT setval('role_id_role_seq', 3);
 
 SELECT setval('state_id_state_seq', 3);
 
-SELECT setval('task_id_task_seq', 13);
+SELECT setval('task_id_task_seq', 12);
 
-SELECT setval('task_request_id_task_request_seq', 24);
+SELECT setval('task_request_id_task_request_seq', 12);
 
 SELECT setval('user_id_user_seq', 24);
 
