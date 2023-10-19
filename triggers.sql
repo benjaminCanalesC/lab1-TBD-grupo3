@@ -407,8 +407,8 @@ EXECUTE FUNCTION log_query_request();
 
 
 
--- Crear una función que registre las operaciones en la tabla rol
-CREATE OR REPLACE FUNCTION log_query_rol()
+-- Crear una función que registre las operaciones en la tabla role
+CREATE OR REPLACE FUNCTION log_query_role()
 RETURNS TRIGGER AS $$
 DECLARE
     current_username VARCHAR(255);
@@ -418,18 +418,18 @@ DECLARE
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
     current_username := session_user;
-    table_name := 'rol';
+    table_name := 'role';
 
     -- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
-        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_rol, rol_name) VALUES (' || NEW.id_rol || ', ' || quote_literal(NEW.rol_name) || ')';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_role, role_name) VALUES (' || NEW.id_role || ', ' || quote_literal(NEW.role_name) || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
-        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET rol_name = ' || quote_literal(NEW.rol_name) || ' WHERE id_rol = ' || NEW.id_rol;
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET role_name = ' || quote_literal(NEW.role_name) || ' WHERE id_role = ' || NEW.id_role;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
-        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_rol = ' || OLD.id_rol;
+        operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_role = ' || OLD.id_role;
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
@@ -440,13 +440,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Crear el trigger que se dispara después de INSERT, UPDATE o DELETE en la tabla rol
-CREATE TRIGGER log_query_rol_trigger
+CREATE TRIGGER log_query_role_trigger
 AFTER INSERT OR UPDATE OR DELETE
-ON public.rol
+ON public.role
 FOR EACH ROW
-EXECUTE FUNCTION log_query_rol();
-
-
+EXECUTE FUNCTION log_query_role();
 
 
 
