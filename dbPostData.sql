@@ -208,15 +208,15 @@ SELECT setval('emergency_task_id_emergency_task_seq', 24);
 
 SELECT setval('institution_id_institution_seq', 6);
 
-SELECT setval('profile_id_profile_seq', 8);
+SELECT setval('profile_id_profile_seq', 24);
 
-SELECT setval('ranking_id_ranking', 12);
+SELECT setval('ranking_id_ranking_seq', 12);
 
 SELECT setval('request_id_request_seq', 12);
 
 SELECT setval('role_id_role_seq', 3);
 
-SELECT setval('state_id_state_seq', 4);
+SELECT setval('state_id_state_seq', 3);
 
 SELECT setval('task_id_task_seq', 13);
 
