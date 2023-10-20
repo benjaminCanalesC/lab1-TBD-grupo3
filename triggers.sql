@@ -66,10 +66,10 @@ EXECUTE FUNCTION log_query_ability();
 CREATE OR REPLACE FUNCTION log_query_emergency()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     
     -- obtener id de usuario y nombre de la tabla
@@ -89,7 +89,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log 
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -107,10 +107,10 @@ EXECUTE FUNCTION log_query_emergency();
 CREATE OR REPLACE FUNCTION log_query_emergency_ability()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -129,7 +129,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log 
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -149,10 +149,10 @@ EXECUTE FUNCTION log_query_emergency_ability();
 CREATE OR REPLACE FUNCTION log_query_emergency_institution()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -172,7 +172,7 @@ IF (TG_OP = 'INSERT') THEN
 
 
     -- Insertar el registro en la tabla query_log 
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -192,10 +192,10 @@ EXECUTE FUNCTION log_query_emergency_institution();
 CREATE OR REPLACE FUNCTION log_query_emergency_task()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -214,7 +214,7 @@ BEGIN
     END IF;
 	
     -- Insertar el registro en la tabla query_log 
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -235,10 +235,10 @@ EXECUTE FUNCTION log_query_emergency_task();
 CREATE OR REPLACE FUNCTION log_query_institution()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -257,7 +257,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -278,10 +278,10 @@ EXECUTE FUNCTION log_query_institution();
 CREATE OR REPLACE FUNCTION log_query_profile()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -300,7 +300,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -321,10 +321,10 @@ EXECUTE FUNCTION log_query_profile();
 CREATE OR REPLACE FUNCTION log_query_ranking()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -344,7 +344,7 @@ BEGIN
 
 	
     -- Insertar el registro en la tabla query_log 
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -365,10 +365,10 @@ EXECUTE FUNCTION log_query_ranking();
 CREATE OR REPLACE FUNCTION log_query_request()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -386,7 +386,7 @@ BEGIN
         operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_request = ' || OLD.id_request;
     END IF;
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -405,10 +405,10 @@ EXECUTE FUNCTION log_query_request();
 CREATE OR REPLACE FUNCTION log_query_role()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -427,7 +427,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -446,10 +446,10 @@ EXECUTE FUNCTION log_query_role();
 CREATE OR REPLACE FUNCTION log_query_state()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -467,7 +467,7 @@ BEGIN
         operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_state = ' || OLD.id_state;
     END IF;
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -488,10 +488,10 @@ EXECUTE FUNCTION log_query_state();
 CREATE OR REPLACE FUNCTION log_query_task()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -510,7 +510,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -529,10 +529,10 @@ EXECUTE FUNCTION log_query_task();
 CREATE OR REPLACE FUNCTION log_query_task_request()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -550,7 +550,7 @@ BEGIN
         operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_task_request = ' || OLD.id_task_request;
     END IF;
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -570,10 +570,10 @@ EXECUTE FUNCTION log_query_task_request();
 CREATE OR REPLACE FUNCTION log_query_user()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -592,7 +592,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -612,10 +612,10 @@ EXECUTE FUNCTION log_query_user();
 CREATE OR REPLACE FUNCTION log_query_user_ability()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -634,7 +634,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -653,10 +653,10 @@ EXECUTE FUNCTION log_query_user_ability();
 CREATE OR REPLACE FUNCTION log_query_user_request()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
-    query_text VARCHAR(10);
-	operation VARCHAR(225);
+    query_text TEXT;
+    operation TEXT;
 BEGIN
     -- obtener id de usuario y nombre de la tabla
     SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
@@ -675,7 +675,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla query_log usando la variable current_username, table_name y query_text
-    INSERT INTO query_log (username, table_name, query_text) VALUES (current_username, table_name, query_text);
+    INSERT INTO query_log (username, table_name, query_text) VALUES (username, table_name, query_text);
 
     RETURN NEW;
 END;
