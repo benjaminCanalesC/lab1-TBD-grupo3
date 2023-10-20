@@ -8,24 +8,14 @@ CREATE TABLE IF NOT EXISTS public.query_log (
     timestamp TIMESTAMPTZ DEFAULT NOW()
 );
 
--- DEFINIR VARIABLE DE ENTORNO
-SELECT set_config('app.user_id', '0', false);  -- el valor 1 tiene que cambiar
+-- Crear tabla en donde se coloque el id del usuario que esta logeado
+CREATE TABLE IF NOT EXISTS login_identification (
+    id_login_identification SERIAL PRIMARY KEY,
+    user_id INT
+);
 
--- Procedimiento para cambiar el app.user_id
-CREATE OR REPLACE FUNCTION set_user_id(user_id integer)
-RETURNS void AS $$
-BEGIN
-    -- Establecer la variable de entorno con el ID del usuario
-    SELECT set_config('app.user_id', user_id::text, false);
-	
-END;
-$$ LANGUAGE plpgsql;
-
---DROP FUNCTION set_user_id;
-
---SELECT current_setting('app.user_id', false);
-
---select * from query_log;
+-- login_identification comienza con una id inicial que se actualiza
+insert into login_identification (user_id) values (0);
 
 -------------- TRIGGERS EN ORDEN
 
@@ -38,8 +28,9 @@ DECLARE
     query_text TEXT;
     operation TEXT;
 BEGIN
-   -- Obtener el valor de app.user_id como nombre de usuario actual y dar nombre a la tabla
-    username := current_setting('app.user_id', false);
+
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'ability';
 
     -- Obtener la operación realizada y construir la consulta
@@ -81,8 +72,8 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     
--- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'emergency';
 
    -- Obtener la operación realizada y construir la consulta
@@ -121,8 +112,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'emergency_ability';
 
     -- Obtener la operación realizada y construir la consulta
@@ -163,8 +154,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'emergency_institution';
 
     -- Obtener la operación realizada y construir la consulta
@@ -206,9 +197,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual
--- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'emergency_task';
 
     -- Obtener la operación realizada y construir la consulta
@@ -250,8 +240,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'institution';
 
     -- Obtener la operación realizada y construir la consulta
@@ -293,8 +283,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'profile';
 
     -- Obtener la operación realizada y construir la consulta
@@ -336,8 +326,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'ranking';
 
     -- Obtener la operación realizada y construir la consulta
@@ -380,8 +370,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'request';
 
     -- Obtener la operación realizada y construir la consulta
@@ -420,8 +410,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'role';
 
     -- Obtener la operación realizada y construir la consulta
@@ -461,8 +451,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'state';
 
     -- Obtener la operación realizada y construir la consulta
@@ -503,8 +493,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'task';
 
     -- Obtener la operación realizada y construir la consulta
@@ -544,8 +534,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'task_request';
 
 -- Obtener la operación realizada y construir la consulta
@@ -585,8 +575,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'user';
 
  	-- Obtener la operación realizada y construir la consulta
@@ -627,8 +617,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'user_ability';
 
     -- Obtener la operación realizada y construir la consulta
@@ -668,8 +658,8 @@ DECLARE
     query_text VARCHAR(10);
 	operation VARCHAR(225);
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_setting('app.user_id', false);
+    -- obtener id de usuario y nombre de la tabla
+    SELECT user_id::TEXT INTO username FROM login_identification LIMIT 1;
     table_name := 'user_request';
 
     -- Obtener la operación realizada y construir la consulta
