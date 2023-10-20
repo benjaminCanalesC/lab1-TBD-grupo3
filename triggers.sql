@@ -8,20 +8,24 @@ CREATE TABLE IF NOT EXISTS public.query_log (
     timestamp TIMESTAMPTZ DEFAULT NOW()
 );
 
-
 -- DEFINIR VARIABLE DE ENTORNO
-SELECT set_config('app.user_id', '1', true);  -- el valor 1 tiene que cambiar
+SELECT set_config('app.user_id', '0', false);  -- el valor 1 tiene que cambiar
 
 -- Procedimiento para cambiar el app.user_id
 CREATE OR REPLACE FUNCTION set_user_id(user_id integer)
 RETURNS void AS $$
 BEGIN
     -- Establecer la variable de entorno con el ID del usuario
-    SELECT set_config('app.user_id', user_id::text, true);
+    SELECT set_config('app.user_id', user_id::text, false);
+	
 END;
 $$ LANGUAGE plpgsql;
 
+--DROP FUNCTION set_user_id;
 
+--SELECT current_setting('app.user_id', false);
+
+--select * from query_log;
 
 -------------- TRIGGERS EN ORDEN
 
@@ -29,13 +33,13 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION log_query_ability()
 RETURNS TRIGGER AS $$
 DECLARE
-    current_username VARCHAR(255);
+    username TEXT;
     table_name VARCHAR(25);
     query_text TEXT;
     operation TEXT;
 BEGIN
-    -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := current_user; -- Cambiado a current_user
+   -- Obtener el valor de app.user_id como nombre de usuario actual y dar nombre a la tabla
+    username := current_setting('app.user_id', false);
     table_name := 'ability';
 
     -- Obtener la operación realizada y construir la consulta
@@ -51,7 +55,7 @@ BEGIN
     END IF;
 
     -- Insertar el registro en la tabla "query_log"
-    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (current_username, table_name, query_text, operation);
+    INSERT INTO query_log (username, table_name, query_text, operation) VALUES (username, table_name, query_text, operation);
 
     RETURN NEW;
 END;
@@ -78,7 +82,7 @@ DECLARE
 BEGIN
     
 -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'emergency';
 
    -- Obtener la operación realizada y construir la consulta
@@ -118,7 +122,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'emergency_ability';
 
     -- Obtener la operación realizada y construir la consulta
@@ -160,7 +164,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'emergency_institution';
 
     -- Obtener la operación realizada y construir la consulta
@@ -204,7 +208,7 @@ DECLARE
 BEGIN
     -- Obtener el nombre de usuario actual
 -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'emergency_task';
 
     -- Obtener la operación realizada y construir la consulta
@@ -247,7 +251,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
      -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'institution';
 
     -- Obtener la operación realizada y construir la consulta
@@ -290,7 +294,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'profile';
 
     -- Obtener la operación realizada y construir la consulta
@@ -333,7 +337,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'ranking';
 
     -- Obtener la operación realizada y construir la consulta
@@ -377,7 +381,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'request';
 
     -- Obtener la operación realizada y construir la consulta
@@ -417,7 +421,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'role';
 
     -- Obtener la operación realizada y construir la consulta
@@ -458,7 +462,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'state';
 
     -- Obtener la operación realizada y construir la consulta
@@ -500,7 +504,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'task';
 
     -- Obtener la operación realizada y construir la consulta
@@ -541,7 +545,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'task_request';
 
 -- Obtener la operación realizada y construir la consulta
@@ -582,16 +586,16 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'user';
 
  	-- Obtener la operación realizada y construir la consulta
     IF (TG_OP = 'INSERT') THEN
         query_text := 'INSERT';
-        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_user, username, password, id_profile, id_rol, id_institution) VALUES (' || NEW.id_user || ', ' || quote_literal(NEW.username) || ', ' || quote_literal(NEW.password) || ', ' || NEW.id_profile || ', ' || NEW.id_rol || ', ' || NEW.id_institution || ')';
+        operation := 'INSERT INTO ' || TG_TABLE_NAME || ' (id_user, username, password, id_profile, id_role, id_institution) VALUES (' || NEW.id_user || ', ' || quote_literal(NEW.username) || ', ' || quote_literal(NEW.password) || ', ' || NEW.id_profile || ', ' || NEW.id_role || ', ' || NEW.id_institution || ')';
     ELSIF (TG_OP = 'UPDATE') THEN
         query_text := 'UPDATE';
-        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET username = ' || quote_literal(NEW.username) || ', password = ' || quote_literal(NEW.password) || ', id_profile = ' || NEW.id_profile || ', id_rol = ' || NEW.id_rol || ', id_institution = ' || NEW.id_institution || ' WHERE id_user = ' || NEW.id_user;
+        operation := 'UPDATE ' || TG_TABLE_NAME || ' SET username = ' || quote_literal(NEW.username) || ', password = ' || quote_literal(NEW.password) || ', id_profile = ' || NEW.id_profile || ', id_role = ' || NEW.id_role || ', id_institution = ' || NEW.id_institution || ' WHERE id_user = ' || NEW.id_user;
     ELSIF (TG_OP = 'DELETE') THEN
         query_text := 'DELETE';
         operation := 'DELETE FROM ' || TG_TABLE_NAME || ' WHERE id_user = ' || OLD.id_user;
@@ -624,7 +628,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'user_ability';
 
     -- Obtener la operación realizada y construir la consulta
@@ -665,7 +669,7 @@ DECLARE
 	operation VARCHAR(225);
 BEGIN
     -- Obtener el nombre de usuario actual y dar el nombre de la tabla
-    current_username := session_user;
+    current_username := current_setting('app.user_id', false);
     table_name := 'user_request';
 
     -- Obtener la operación realizada y construir la consulta
