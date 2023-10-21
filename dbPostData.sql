@@ -98,8 +98,18 @@ VALUES
 	
 INSERT INTO emergency_task (id_emergency, id_task)
 VALUES
-	(1,1), (2,3), (3,6), (4,5), (5,9), (6,2), (7,11), 
-	(8,4), (9,7), (10,12), (11,8), (12,10);
+	(1,1), (1,3), (1,5), (1,12),
+	(2,3), (2,4), (2,8),
+	(3,4), (3,6), (3,8), (3,12),
+	(4,5), (4,6), (4,9),
+	(5,1), (5,9), (5,10), (5,11),
+	(6,2), (6,4), (6,12),
+	(7,4), (7,11),
+	(8,4), (8,11), (8,12),
+	(9,2), (9,7), (9,8),
+	(10,4), (10,7), (10,12),
+	(11,8), (11,10), (11,11),
+	(12,1), (12,2), (12,10);
 	
 INSERT INTO ability (id_ability, ability_name, ability_description)
 VALUES 
@@ -116,33 +126,32 @@ VALUES
 	(5,2),(5,3),(5,4),(6,1),(6,4),(7,4),(7,5),(8,3),(8,5),(9,1),(9,5),
 	(10,3),(10,5),(11,2),(11,3),(11,5),(12,2),(12,3),(12,4);
 
-INSERT INTO profile (id_profile, photo, first_name, first_lastname,
-					 description, gender, birthday)
+INSERT INTO profile (id_profile, photo, rut, first_name, second_name, first_lastname, second_lastname, description, gender, birthday)
 VALUES
-	(1, 'enlace', 'Aracely', 'Castro', 'Administradora de la App', 'F', '2000-01-01'),
-	(2, 'enlace', 'Vicente', 'Mieres', 'Administrador de la App', 'M', '2000-01-01'),
-	(3, 'enlace', 'Branco', 'García', 'Administrador de la App', 'M', '2000-01-01'),
-	(4, 'enlace', 'Benjamin', 'Canales', 'Administrador de la App', 'M', '2000-01-01'),
-	(5, 'enlace', 'Daniel', 'Eguiluz', 'Administrador de la App', 'M', '2000-01-01'),
-	(6, 'enlace', 'Humberto', 'Salas', 'Ayudando con erupciones volcanicas', 'M', '1998-04-12'),
-	(7, 'enlace', 'Carla', 'Muñoz', 'Contratacando incendios', 'F', '1993-02-05'),
-	(8, 'enlace', 'Sofia', 'Carvajal', 'Resguardando tras inundaciones', 'F', '1990-02-10'),
-	(9, 'enlace', 'Fernando', 'Ramírez', 'Investigador de Terremotos en INAT', 'M', '1985-08-25'),
-    (10, 'enlace', 'Lucía', 'Torres', 'Voluntaria de CAV para la Seguridad Volcánica', 'F', '1990-06-14'),
-    (11, 'enlace', 'Raúl', 'Mendoza', 'Especialista en Tsunamis en IDT', 'M', '1979-03-18'),
-    (12, 'enlace', 'Marta', 'Gutiérrez', 'Restauradora de CREPIF', 'F', '1992-12-03'),
-    (13, 'enlace', 'Manuel', 'Hernández', 'Gestor de Inundaciones en IGI', 'M', '1988-11-01'),
-    (14, 'enlace', 'Camila', 'Silva', 'Prevención de Derrumbes en IPDDT', 'F', '1980-07-22'),
-	(15, 'enlace', 'Luis', 'Pérez', 'Investigador Asociado en INAT', 'M', '1990-04-15'),
-    (16, 'enlace', 'Ana', 'Rodríguez', 'Asistente de Investigación en INAT', 'F', '1993-07-28'),
-    (17, 'enlace', 'Diego', 'Ortega', 'Educador en CAV', 'M', '1985-02-10'),
-    (18, 'enlace', 'Elena', 'López', 'Coordinadora de Tsunami en IDT', 'F', '1988-12-05'),
-    (19, 'enlace', 'José', 'Martínez', 'Especialista en Restauración en CREPIF', 'M', '1991-09-20'),
-    (20, 'enlace', 'Valentina', 'Gómez', 'Analista de Inundaciones en IGI', 'F', '1983-03-12'),
-    (21, 'enlace', 'Federico', 'Díaz', 'Técnico en Deslizamientos de Tierra en IPDDT', 'M', '1980-05-08'),
-    (22, 'enlace', 'Laura', 'Castillo', 'Supervisora de INAT', 'F', '1982-10-16'),
-    (23, 'enlace', 'Andrés', 'Sanchez', 'Coordinador de Voluntarios en CAV', 'M', '1987-06-30'),
-    (24, 'enlace', 'Mariana', 'Vargas', 'Coordinadora de Respuesta a Tsunamis en IDT', 'F', '1992-01-25');
+    (1, 'enlace', '23.453.465-6', 'Aracely', 'Gabriela', 'Castro', 'Perez', 'Administradora de la App', 'F', '2000-01-01'),
+    (2, 'enlace', '12.345.678-9', 'Vicente', 'Andrés', 'Mieres', 'González', 'Administrador de la App', 'M', '2000-01-01'),
+    (3, 'enlace', '34.567.890-1', 'Branco', 'Alberto', 'García', 'Santana', 'Administrador de la App', 'M', '2000-01-01'),
+    (4, 'enlace', '45.678.901-2', 'Benjamin', 'Felipe', 'Canales', 'Díaz', 'Administrador de la App', 'M', '2000-01-01'),
+    (5, 'enlace', '56.789.012-3', 'Daniel', 'Esteban', 'Eguiluz', 'Lopez', 'Administrador de la App', 'M', '2000-01-01'),
+    (6, 'enlace', '67.890.123-4', 'Humberto', 'Mauricio', 'Salas', 'Fernández', 'Ayudando con erupciones volcanicas', 'M', '1998-04-12'),
+    (7, 'enlace', '78.901.234-5', 'Carla', 'Isabel', 'Muñoz', 'Sánchez', 'Contratacando incendios', 'F', '1993-02-05'),
+    (8, 'enlace', '89.012.345-6', 'Sofia', 'Beatriz', 'Carvajal', 'Ramírez', 'Resguardando tras inundaciones', 'F', '1990-02-10'),
+    (9, 'enlace', '90.123.456-7', 'Fernando', 'Alejandro', 'Ramírez', 'Ortega', 'Investigador de Terremotos en INAT', 'M', '1985-08-25'),
+    (10, 'enlace', '11.234.567-8', 'Lucía', 'Valentina', 'Torres', 'Hernández', 'Voluntaria de CAV para la Seguridad Volcánica', 'F', '1990-06-14'),
+    (11, 'enlace', '12.345.678-9', 'Raúl', 'Eduardo', 'Mendoza', 'Silva', 'Especialista en Tsunamis en IDT', 'M', '1979-03-18'),
+    (12, 'enlace', '23.456.789-0', 'Marta', 'Elena', 'Gutiérrez', 'López', 'Restauradora de CREPIF', 'F', '1992-12-03'),
+    (13, 'enlace', '34.567.890-1', 'Manuel', 'Roberto', 'Hernández', 'Rodríguez', 'Gestor de Inundaciones en IGI', 'M', '1988-11-01'),
+    (14, 'enlace', '45.678.901-2', 'Camila', 'Florencia', 'Silva', 'Martínez', 'Prevención de Derrumbes en IPDDT', 'F', '1980-07-22'),
+    (15, 'enlace', '56.789.012-3', 'Luis', 'Antonio', 'Pérez', 'González', 'Investigador Asociado en INAT', 'M', '1990-04-15'),
+    (16, 'enlace', '67.890.123-4', 'Ana', 'Carolina', 'Rodríguez', 'Muñoz', 'Asistente de Investigación en INAT', 'F', '1993-07-28'),
+    (17, 'enlace', '78.901.234-5', 'Diego', 'Javier', 'Ortega', 'Martínez', 'Educador en CAV', 'M', '1985-02-10'),
+    (18, 'enlace', '89.012.345-6', 'Elena', 'Margarita', 'López', 'Castro', 'Coordinadora de Tsunami en IDT', 'F', '1988-12-05'),
+    (19, 'enlace', '90.123.456-7', 'José', 'Miguel', 'Martínez', 'Gómez', 'Especialista en Restauración en CREPIF', 'M', '1991-09-20'),
+    (20, 'enlace', '11.234.567-K', 'Valentina', 'Isidora', 'Gómez', 'Rodríguez', 'Analista de Inundaciones en IGI', 'F', '1983-03-12'),
+    (21, 'enlace', '23.345.678-0', 'Federico', 'Ignacio', 'Díaz', 'Hernández', 'Técnico en Deslizamientos de Tierra en IPDDT', 'M', '1980-05-08'),
+    (22, 'enlace', '34.456.789-1', 'Laura', 'Gabriela', 'Castillo', 'Torres', 'Supervisora de INAT', 'F', '1982-10-16'),
+    (23, 'enlace', '45.567.890-K', 'Andrés', 'Manuel', 'Sanchez', 'Silva', 'Coordinador de Voluntarios en CAV', 'M', '1987-06-30'),
+    (24, 'enlace', '56.678.901-3', 'Mariana', 'Javiera', 'Vargas', 'Muñoz', 'Coordinadora de Respuesta a Tsunamis en IDT', 'F', '1992-01-25');
 
 INSERT INTO "user" (id_user, username, password, id_profile,
 					 id_role, id_institution)
@@ -189,9 +198,18 @@ VALUES
 
 INSERT INTO ranking (ranking_position, id_user, id_task)
 VALUES
-	(1, 12, 1), (1, 9, 2), (1, 4, 3), (1, 2, 4), (1, 2, 5),
-	(1, 17, 6), (1, 18, 7), (1, 13, 8), (1, 16, 9), (1, 20, 10),
-	(1, 21, 11), (1, 24, 12);
+	(1, 12, 1), (2, 13, 1), (3, 15, 1), 
+	(1, 17, 2), (2, 18, 2), (3, 23, 2),
+	(1, 19, 3), (2, 20, 3), (3, 24, 3),
+	(1, 20, 4), (2, 21, 4), (3, 23, 4),
+	(1, 2, 5), (2, 22, 5), (3, 12, 5),
+	(1, 17, 6), (2, 18, 6), (3, 19, 6),
+	(1, 18, 7), (2, 12, 7), (3, 13, 7), 
+	(1, 13, 8), (2, 19, 8), (3, 21, 8),
+	(1, 16, 9), (2, 18, 9), (3, 24, 9),
+	(1, 20, 10), (2, 23, 10), (3, 12, 10),
+	(1, 21, 11), (2, 23, 11), (3, 24, 11),
+	(1, 17, 12), (2, 19, 12), (3, 24, 12);
 
 -- Secuencias para evitar llaves duplicadas en posteo de datos en postman
 
@@ -203,13 +221,13 @@ SELECT setval('emergency_ability_id_emergency_ability_seq', 30);
 
 SELECT setval('emergency_institution_id_emergency_institution_seq', 12);
 
-SELECT setval('emergency_task_id_emergency_task_seq', 12);
+SELECT setval('emergency_task_id_emergency_task_seq', 38);
 
 SELECT setval('institution_id_institution_seq', 6);
 
 SELECT setval('profile_id_profile_seq', 24);
 
-SELECT setval('ranking_id_ranking_seq', 12);
+SELECT setval('ranking_id_ranking_seq', 36);
 
 SELECT setval('request_id_request_seq', 12);
 

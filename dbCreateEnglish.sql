@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS public.institution(
 CREATE TABLE IF NOT EXISTS public.profile(
     id_profile SERIAL PRIMARY KEY,
     photo varchar(200),
+	rut TEXT COLLATE pg_catalog."default",
     first_name TEXT COLLATE pg_catalog."default",
     second_name TEXT COLLATE pg_catalog."default",
     first_lastname TEXT COLLATE pg_catalog."default",
