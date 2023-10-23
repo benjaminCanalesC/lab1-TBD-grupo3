@@ -2,7 +2,7 @@
 
 INSERT INTO state (id_state, state_name, state_description)
 VALUES
-    (1, 'Sin asignar', 'La tarea o emergencia se ha definido pero no está en curso'),
+    (1, 'Inicializada', 'La tarea o emergencia se ha definido pero no está en curso'),
     (2, 'En curso', 'La tarea o emergencia actualmente se está llevando a cabo'),
     (3, 'Finalizada', 'La tarea o emergencia se ha terminado de realizar');
 	
