@@ -1,5 +1,5 @@
 
-id direccion latitud longitud   
+id direccion longitud, latitud
 1 ,'Caupolicán 1027, Concepción, Bío Bío' ,-36.821393959657435, -73.0547538041757
 2 ,'Avda. Fco de Aguirre 170, 1710156 La Serena, Coquimbo' ,-29.90545603158812, -71.25461346356609
 3 ,'Av. Carlos Condell 1127, 2261467 Quillota, Valparaíso', -32.89143880250012, -71.24314311789601
