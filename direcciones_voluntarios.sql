@@ -11,7 +11,7 @@ CREATE TABLE volunteer_addresses (
 );
 
 CREATE TABLE emergency_addresses (
-  id_address_e SERIAL PRIMARY KEY, -- en este caso emergency tiene las direcciones 
+  id_address_e SERIAL PRIMARY KEY,  
   address VARCHAR(255) NOT NULL,
   longitude FLOAT NOT NULL,
   latitude FLOAT NOT NULL
