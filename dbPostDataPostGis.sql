@@ -73,7 +73,7 @@ VALUES
 	(6, 'Institución de Prevención de Derrumbes y Deslizamiento de Tierra (IPDDT)',
 	 'es una entidad especializada en la prevención y mitigación de derrumbes y deslizamientos de tierra en áreas montañosas y colinas. Implementan sistemas de monitoreo de la estabilidad del suelo y colaboran con las comunidades en la planificación de medidas preventivas');
 		
-INSERT INTO emergency_addresses (id_address_e, address, longitude, latitude) VALUES
+INSERT INTO emergency_address (id_address_e, address, longitude, latitude) VALUES
 	(1, 'Lautaro, Araucanía', -38.57434144039071, -72.4756987329032),
   	(2, 'Viña del Mar, Valparaíso', -32.993457378637764, -71.53361941561872),
   	(3, 'Pucón, Araucanía', -39.41955618986563, -71.93942618853083),
@@ -87,8 +87,7 @@ INSERT INTO emergency_addresses (id_address_e, address, longitude, latitude) VAL
   	(11, 'Villa Santa Lucía, Chaitén, Los Lagos', -43.4106060512741, -72.36752613467937),
   	(12, 'Los Angeles, Bío Bío', -37.42699254228149, -72.3287247972075);	
 
-ALTER TABLE emergency_addresses ADD COLUMN geom geometry(Point, 4326);
-UPDATE emergency_addresses SET geom = ST_SetSRID(ST_MakePoint(latitude, longitude), 4326);
+UPDATE emergency_address SET geom = ST_SetSRID(ST_MakePoint(latitude, longitude), 4326);
 		
 INSERT INTO emergency (id_emergency, emergency_name, emergency_location, 
 					   emergency_type, statement_date, id_state, id_address_e)
@@ -170,7 +169,7 @@ VALUES
     (23, 'enlace', '45.567.890-K', 'Andrés', 'Manuel', 'Sanchez', 'Silva', 'Coordinador de Voluntarios en CAV', 'M', '1987-06-30'),
     (24, 'enlace', '56.678.901-3', 'Mariana', 'Javiera', 'Vargas', 'Muñoz', 'Coordinadora de Respuesta a Tsunamis en IDT', 'F', '1992-01-25');
 
-INSERT INTO volunteer_addresses (id_address_v, address, latitude, longitude) VALUES
+INSERT INTO user_address (id_address_u, address, latitude, longitude) VALUES
   	(1, 'Caupolicán 1027, Concepción, Bío Bío', -73.0547538041757, -36.821393959657435),
   	(2,'Avda. Fco de Aguirre 170, 1710156 La Serena, Coquimbo', -71.25461346356609, -29.90545603158812),
   	(3, 'Av. Carlos Condell 1127, 2261467 Quillota, Valparaíso', -71.24314311789601, -32.89143880250012),
@@ -196,11 +195,10 @@ INSERT INTO volunteer_addresses (id_address_v, address, latitude, longitude) VAL
   	(23 ,'Caupolicán 660, Providencia, Región Metropolitana', -70.62165556569133, -33.44738511181257),
   	(24 ,'Pje. 11 de Septiembre 230, Mejillones, Antofagasta', -70.44292641837411, -23.099618075044457);
 
-ALTER TABLE volunteer_addresses ADD COLUMN geom geometry(Point, 4326);
-UPDATE volunteer_addresses SET geom = ST_SetSRID(ST_MakePoint(latitude, longitude), 4326);
+UPDATE user_address SET geom = ST_SetSRID(ST_MakePoint(latitude, longitude), 4326);
   
 INSERT INTO "user" (id_user, username, password, id_profile,
-					 id_role, id_institution, id_address_v)
+					 id_role, id_institution, id_address_u)
 VALUES
 	(1, 'aracelyC', '$2a$10$klotFGdYLOB1mPcEzpoqLOIiqOdrs72Pj/Cs.RgOd8Hp4OMWDOj42', 1, 1, 1, 1),
 	(2, 'mieres7', '$2a$10$klotFGdYLOB1mPcEzpoqLOIiqOdrs72Pj/Cs.RgOd8Hp4OMWDOj42', 2, 1, 2, 2),
