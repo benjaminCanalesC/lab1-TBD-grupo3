@@ -89,24 +89,21 @@ INSERT INTO emergency_address (id_address_e, address, longitude, latitude) VALUE
 
 UPDATE emergency_address SET geom = ST_SetSRID(ST_MakePoint(latitude, longitude), 4326);
 		
-INSERT INTO emergency (id_emergency, emergency_name, emergency_location, 
+INSERT INTO emergency (id_emergency, emergency_name, 
 					   emergency_type, statement_date, id_state, id_address_e)
 VALUES
-	(1, 'Incendio forestal en comuna Lautaro', 'Lautaro, Región de la Araucanía',
-	'0', '2023-10-15', 1, 1),
-	(2, 'Incendio forestal en Viña del Mar', 'Viña del Mar, Región de Valparaíso',
-	'0', '2023-10-14', 1, 2),
-	(3, 'Erupción Volcán Villarica', 'Región de la Araucanía', '1', '2023-10-16', 1, 3),
-	(4, 'Erupción complejo volcánico Puyehue', 'Región de los Ríos', '1','2023-10-12', 1, 4),
-	(5, 'Terremoto de Iquique', 'Región de Tarapacá', '2', '2023-10-15', 1, 5),
-	(6, 'Terremoto Tocopilla', 'Región de Antofagasta', '2', '2023-10-13', 1, 6),
-	(7, 'Derrumbe Santiago', 'Región Metropolitana', '3', '2023-10-09', 1, 7),
-	(8, 'Derrumbes en Illapel', 'Región de Coquimbo', '3', '2023-10-10', 1, 8),
-	(9, 'Tsunami en Antofagasta', 'Región de Antofagasta', '4', '2023-10-08', 1, 9),
-	(10, 'Tsunami en Constitución', 'Región de El Maule', '4', '2023-10-08', 1, 10),
-	(11, 'Aluvión de Villa Santa Lucía', 'Chaitén, Región de Los Lagos', 
-	 '5', '2023-10-13', 1, 11),
-	(12, 'Aluvión del Biobío', 'Región del Biobío', '5', '2023-10-14', 1, 12);
+	(1, 'Incendio forestal en comuna Lautaro', '0', '2023-10-15', 1, 1),
+	(2, 'Incendio forestal en Viña del Mar', '0', '2023-10-14', 1, 2),
+	(3, 'Erupción Volcán Villarica', '1', '2023-10-16', 1, 3),
+	(4, 'Erupción complejo volcánico Puyehue', '1','2023-10-12', 1, 4),
+	(5, 'Terremoto de Iquique', '2', '2023-10-15', 1, 5),
+	(6, 'Terremoto Tocopilla', '2', '2023-10-13', 1, 6),
+	(7, 'Derrumbe Santiago', '3', '2023-10-09', 1, 7),
+	(8, 'Derrumbes en Illapel', '3', '2023-10-10', 1, 8),
+	(9, 'Tsunami en Antofagasta', '4', '2023-10-08', 1, 9),
+	(10, 'Tsunami en Constitución', '4', '2023-10-08', 1, 10),
+	(11, 'Aluvión de Villa Santa Lucía', '5', '2023-10-13', 1, 11),
+	(12, 'Aluvión del Biobío', '5', '2023-10-14', 1, 12);
 
 INSERT INTO emergency_institution (id_emergency, id_institution)
 VALUES
