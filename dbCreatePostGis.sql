@@ -1,23 +1,24 @@
 -- CREAR TABLAS DE BASE DE DATOS GRUPO 3.
 
--- agregar si es que no se tiene la extensión de postgis
--- CREATE EXTENSION postgis;
-
 BEGIN;
+
+CREATE EXTENSION postgis;
 
 -- Creación de las tablas
 
-CREATE TABLE IF NOT EXISTS public.volunteer_addresses (
-  	id_address_v SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS public.user_address (
+  	id_address_u SERIAL PRIMARY KEY,
   	address TEXT COLLATE pg_catalog."default",
   	latitude FLOAT,
-  	longitude FLOAT);
+  	longitude FLOAT,
+	geom geometry(Point, 4326));
 
-CREATE TABLE IF NOT EXISTS public.emergency_addresses (
+CREATE TABLE IF NOT EXISTS public.emergency_address (
   	id_address_e SERIAL PRIMARY KEY,  
   	address TEXT COLLATE pg_catalog."default",
   	longitude FLOAT,
-  	latitude FLOAT);
+  	latitude FLOAT,
+	geom geometry(Point, 4326));
 
 CREATE TABLE IF NOT EXISTS public.role(
     id_role SERIAL PRIMARY KEY,
@@ -105,7 +106,7 @@ CREATE TABLE IF NOT EXISTS public.user(
     id_profile INTEGER,
     id_role INTEGER,
     id_institution INTEGER,
-	id_address_v INTEGER);
+	id_address_u INTEGER);
 
 CREATE TABLE IF NOT EXISTS public.user_ability(
     id_user_ability SERIAL PRIMARY KEY,
@@ -133,7 +134,7 @@ ALTER TABLE IF EXISTS public.emergency
 	
 ALTER TABLE IF EXISTS public.emergency
     ADD CONSTRAINT "idAddressEFK" FOREIGN KEY (id_address_e)
-    REFERENCES public.emergency_addresses (id_address_e) MATCH SIMPLE
+    REFERENCES public.emergency_address (id_address_e) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
@@ -204,8 +205,8 @@ ALTER TABLE IF EXISTS public.user
     ON DELETE NO ACTION;
 	
 ALTER TABLE IF EXISTS public.user
-    ADD CONSTRAINT "idAddressVFK" FOREIGN KEY (id_address_v)
-    REFERENCES public.volunteer_addresses (id_address_v) MATCH SIMPLE
+    ADD CONSTRAINT "idAddressVFK" FOREIGN KEY (id_address_u)
+    REFERENCES public.user_address (id_address_u) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION;
 
